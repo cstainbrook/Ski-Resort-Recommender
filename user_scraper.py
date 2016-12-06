@@ -48,6 +48,7 @@ def get_user_ratings(resort_list):
         print req_resort.status_code
         if req_resort.status_code == 200:
             html_resort = BeautifulSoup(req_resort.content, 'html.parser')
+            resort_name = unidecode(html_resort.find_all('span', attrs={'class': 'resort_name'})[0].text)
             for user, rating in zip(html_resort.find_all('ul', attrs={'class': 'entries'})[0].find_all('h3'), html_resort.find_all('ul', attrs={'class': 'entries'})[0].find_all('b', attrs={'class': 'rating'})):
                 user_str = unidecode(user.text).split(' ')[0]
                 rating_int = int(rating.text)
@@ -65,7 +66,7 @@ def get_user_ratings(resort_list):
                             for user, rating in zip(html_review.find_all('ul', attrs={'class': 'entries'})[0].find_all('h3'), html_review.find_all('ul', attrs={'class': 'entries'})[0].find_all('b', attrs={'class': 'rating'})):
                                 user_str = unidecode(user.text).split(' ')[0]
                                 rating_int = int(rating.text)
-                                new_df = pd.DataFrame([[user_str, resort, rating_int]], columns=['user_name', 'resort_name', 'rating'])
+                                new_df = pd.DataFrame([[user_str, resort_name, rating_int]], columns=['user_name', 'resort_name', 'rating'])
                                 rating_df = rating_df.append(new_df, ignore_index=True)
                                 start_review += 6
                         else:
