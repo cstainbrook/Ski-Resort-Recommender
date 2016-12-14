@@ -14,7 +14,7 @@ def get_all_ratings(state_list):
     for state in state_list:
         print state
         resorts = get_resorts('{}'.format(state))
-        ratings = get_user_ratings(resorts)
+        ratings = get_user_ratings(resorts, state)
         full_ratings_df = pd.concat([full_ratings_df, ratings])
     return full_ratings_df
 
@@ -35,7 +35,7 @@ def get_resorts(state):
             pass
     return resort_list
 
-def get_user_ratings(resort_list):
+def get_user_ratings(resort_list, state):
     '''Once a list of resort links has been collected, this goes to all of the review pages and scrapes the user ratings of the resort.
     Input: list of resorts
     Output: Dictionary of resort ratings (keys: resort name, values: dictionary of different ratings)
@@ -49,6 +49,9 @@ def get_user_ratings(resort_list):
         if req_resort.status_code == 200:
             html_resort = BeautifulSoup(req_resort.content, 'html.parser')
             resort_name = unidecode(html_resort.find_all('span', attrs={'class': 'resort_name'})[0].text)
+            try: max_price = int(html_resort.find_all('td')[-1].text.split('$')[-1][:2])
+            except:
+                max_price = np.nan
             for user, rating in zip(html_resort.find_all('ul', attrs={'class': 'entries'})[0].find_all('h3'), html_resort.find_all('ul', attrs={'class': 'entries'})[0].find_all('b', attrs={'class': 'rating'})):
                 user_str = unidecode(user.text).split(' ')[0]
                 rating_int = int(rating.text)
@@ -66,7 +69,7 @@ def get_user_ratings(resort_list):
                             for user, rating in zip(html_review.find_all('ul', attrs={'class': 'entries'})[0].find_all('h3'), html_review.find_all('ul', attrs={'class': 'entries'})[0].find_all('b', attrs={'class': 'rating'})):
                                 user_str = unidecode(user.text).split(' ')[0]
                                 rating_int = int(rating.text)
-                                new_df = pd.DataFrame([[user_str, resort_name, rating_int]], columns=['user_name', 'resort_name', 'rating'])
+                                new_df = pd.DataFrame([[user_str, resort_name, rating_int, state, max_price]], columns=['user_name', 'resort_name', 'rating', 'state', 'max price'])
                                 rating_df = rating_df.append(new_df, ignore_index=True)
                                 start_review += 6
                         else:
