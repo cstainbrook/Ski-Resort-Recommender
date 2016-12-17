@@ -36,4 +36,6 @@ if __name__ == '__main__':
     user_csv_path = 'user_ratings.csv'
     resort_csv_path = 'resort_ratings.csv'
     factorization_model, factor_rmse = make_factorization_recommender(user_csv_path)
+    factorization_model.save('models/factorization_model')
     content_model, content_rmse = make_content_recommender(user_csv_path, resort_csv_path)
+    content_model.save('models/content_model')

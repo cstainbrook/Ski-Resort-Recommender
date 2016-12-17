@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Grayscale - Start Bootstrap Theme</title>
+    <title>Cooper's Chair Lift</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -125,7 +125,16 @@
                     <hr style='opacity:0'>
                     <h2 style='font-size:400%; color:deepskyblue'>Get Recommendations</h2>
                     <p>Find your next ski vacation using Cooper's Chair Lift Recommender.</p>
-                    <a style='color:deepskyblue; border-color:deepskyblue' href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Recommender</a>
+                    <!-- <a href="/recommender" class="btn btn-default btn-lg">Recommender</a> -->
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <!-- <h2 class="section-heading">Login:</h2> -->
+                        <form action="" class="form-inline" method="post">
+                            <input type="text" class="form-control" placeholder="UserID" name="user_id" value="{{request.form.user_id}}">
+                            <input class="btn btn-default" type="submit" value="Recommend">
+                        </form>
+                        {% block showoutput %}
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
