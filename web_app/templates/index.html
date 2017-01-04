@@ -139,16 +139,16 @@
                     <hr style='opacity:0'>
                     <hr style='opacity:0'>
                     <hr style='opacity:0'>
-                    <p>Don't have an OnTheSnow.com username?  Type and select your favorite resorts below.</p>
+                    <p>Don't have an OnTheSnow.com username?  Type and select your favorite resort below.</p>
                     <div class="col-lg-10 col-lg-offset-1">
                         <!-- <h2 class="section-heading">Login:</h2> -->
                         <form action="" class="form-inline" method="post">
-                            <input style='width:200px; height:40px' list='resort-name' name='resort-name' placeholder="Favorite Resorts" class="form-control" type='text' value="{{request.form.resort_name_entry}}">
-                            <datalist id='resort-name'>
-                              {% for hike in resort_name_list %}
-                              <option value="{{hike}}">{{hike}}</option>
-                              {% endfor %}
-                            </datalist>
+                            <input style='width:200px; height:40px' type='text' class="form-control" placeholder="Favorite Resorts" name='resort-name' value="{{request.form.resort_name_entry}}" list='resort-name'>
+                                <datalist id='resort-name'>
+                                  {% for hike in resort_name_list %}
+                                  <option value="{{hike}}">{{hike}}</option>
+                                  {% endfor %}
+                                </datalist>
                             <input class="btn btn-default" type="submit" value="Recommend">
                         </form>
                         {% block showoutput_new %}

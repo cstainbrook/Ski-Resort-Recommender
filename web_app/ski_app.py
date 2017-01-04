@@ -16,8 +16,12 @@ def index():
     resort_name_list = make_resort_list(resorts)
     error1 = error2 = None
     if request.method == "POST":
-        user = request.form['user_id']
-        return redirect(url_for('recommender', user_id=user))
+        if request.form.get('resort-name'):
+            resort = request.form.get('resort-name')
+            return redirect(url_for('new_user_recommender', resort_name=resort))
+        if request.form.get('user_id'):
+            user = request.form.get('user_id')
+            return redirect(url_for('recommender', user_id=user))
     return render_template('index.html', resort_name_list=resort_name_list)
 
 @app.route('/<user_id>')
@@ -27,11 +31,11 @@ def recommender(user_id):
 
 @app.route('/<resort_name>')
 def new_user_recommender(resort_name):
-    new_sf = gl.SFrame({'Resort Name':[resort_name]})
+    new_sf = gl.SFrame({'Resort Name':[resort_name], 'Rating':[5]})
     recs = model.recommend_from_interactions(new_sf)['Resort Name']
     return render_template('recommender_new_user.html', recommendations=recs)
 
 if __name__ == '__main__':
     model = gl.load_model('../models/factorization_model')
     resorts = pd.read_csv('../resort_names.csv')
-    app.run(host='0.0.0.0', port=7012, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=7017, debug=True, threaded=True)
