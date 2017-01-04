@@ -38,4 +38,4 @@ if __name__ == '__main__':
     factorization_model, factor_rmse = make_factorization_recommender(user_csv_path)
     factorization_model.save('models/factorization_model')
     content_model, content_rmse = make_content_recommender(user_csv_path, resort_csv_path)
-    content_model.save('models/content_model')
+    # content_model.save('models/content_model')
