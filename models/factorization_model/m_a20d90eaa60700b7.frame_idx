@@ -2,12 +2,12 @@
 version=0
 num_segments=0
 num_columns=3
-nrows=343
+nrows=996
 [column_names]
 0000=Resort Name
 0001=linear_terms
 0002=factors
 [column_files]
-0000=m_3716e2508f54d580.sidx:0
-0001=m_3716e2508f54d580.sidx:1
-0002=m_3716e2508f54d580.sidx:2
+0000=m_a20d90eaa60700b7.sidx:0
+0001=m_a20d90eaa60700b7.sidx:1
+0002=m_a20d90eaa60700b7.sidx:2
